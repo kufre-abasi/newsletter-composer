@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { SimpleTemplate } from './email-templates/simple-template';
 import { ProfessionalTemplate } from './email-templates/professional-template';
 import { ModernTemplate } from './email-templates/modern-template';
+import { CardGridTemplate } from './email-templates/card-grid-template';
+import { MediaTeamTemplate } from './email-templates/media-team-template';
+import { TabbedContentTemplate } from './email-templates/tabbed-content-template';
 import { Newsletter } from '@/types/newsletter';
 
 interface EmailRendererProps {
@@ -10,14 +13,17 @@ interface EmailRendererProps {
   className?: string;
 }
 
-export const EmailRenderer = ({ newsletter, className }: EmailRendererProps) => {
+export const EmailRenderer = ({
+  newsletter,
+  className
+}: EmailRendererProps) => {
   const [html, setHtml] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
 
   const getTemplate = () => {
     const props = {
       subject: newsletter.subject,
-      sections: newsletter.sections.sort((a, b) => a.order - b.order),
+      sections: newsletter.sections.sort((a, b) => a.order - b.order)
     };
 
     switch (newsletter.layout) {
@@ -25,6 +31,12 @@ export const EmailRenderer = ({ newsletter, className }: EmailRendererProps) => 
         return <ProfessionalTemplate {...props} />;
       case 'modern':
         return <ModernTemplate {...props} />;
+      case 'card-grid':
+        return <CardGridTemplate {...props} />;
+      case 'media-team':
+        return <MediaTeamTemplate {...props} />;
+      case 'tabbed-content':
+        return <TabbedContentTemplate {...props} />;
       default:
         return <SimpleTemplate {...props} />;
     }
@@ -39,7 +51,9 @@ export const EmailRenderer = ({ newsletter, className }: EmailRendererProps) => 
         setHtml(renderedHtml);
       } catch (error) {
         console.error('Error rendering email:', error);
-        setHtml('<div style="padding: 20px; text-align: center; color: red;">Error rendering email preview</div>');
+        setHtml(
+          '<div style="padding: 20px; text-align: center; color: red;">Error rendering email preview</div>'
+        );
       } finally {
         setIsLoading(false);
       }

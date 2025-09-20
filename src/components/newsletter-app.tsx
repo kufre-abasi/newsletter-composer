@@ -216,7 +216,7 @@ export const NewsletterApp = () => {
                       <div className="bg-preview rounded-lg p-1">
                         <EmailRenderer
                           newsletter={currentNewsletter}
-                          className="h-[600px]"
+                          className="h-screen min-h-[600px]"
                         />
                       </div>
                     </CardContent>
