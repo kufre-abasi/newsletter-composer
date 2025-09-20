@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
- import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { useNewsletterStore } from '@/store/newsletter-store';
 import { NewsletterSection } from '@/types/newsletter';
 import { Plus, Trash2, GripVertical, Type, Image, Heading } from 'lucide-react';
@@ -19,18 +19,21 @@ export const NewsletterEditor = () => {
     updateSection,
     addSection,
     removeSection,
-    reorderSections,
-   } = useNewsletterStore();
+    reorderSections
+  } = useNewsletterStore();
 
-  const [draggedSections, setDraggedSections] = useState<NewsletterSection[]>([]);
+  const [draggedSections, setDraggedSections] = useState<NewsletterSection[]>(
+    []
+  );
 
   if (!currentNewsletter) return null;
-
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
-    const items = Array.from(draggedSections.length > 0 ? draggedSections : currentNewsletter.sections);
+    const items = Array.from(
+      draggedSections.length > 0 ? draggedSections : currentNewsletter.sections
+    );
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
